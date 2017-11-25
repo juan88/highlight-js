@@ -35,7 +35,6 @@ test("Check intervals #3", () => {
     expect(extendInterval({start:2, end:4}, 1, 4)).toEqual([{start:1, end:4}]);
 });
 
-
 test("Check intervals #4", () => {
     expect(extendInterval({start:3, end:6}, 1, 3)).toEqual([{start:1, end:6}]);
 });
