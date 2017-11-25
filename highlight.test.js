@@ -21,7 +21,32 @@ test("check matches for regexp #5", () => {
     expect(matches("XXX", "XXX")).toEqual([0]);
 });
 
+
+//Intervals
+test("Check intervals #1", () => {
+    expect(extendInterval({start:1, end:4}, 2, 4)).toEqual([{start:1, end:4}]);
+});
+
+test("Check intervals #2", () => {
+    expect(extendInterval({start:1, end:4}, 3, 5)).toEqual([{start:1, end:5}]);
+});
+
+test("Check intervals #3", () => {
+    expect(extendInterval({start:2, end:4}, 1, 4)).toEqual([{start:1, end:4}]);
+});
+
+
+test("Check intervals #4", () => {
+    expect(extendInterval({start:3, end:6}, 1, 3)).toEqual([{start:1, end:6}]);
+});
+
+test("Check intervals #5", () => {
+    expect(extendInterval({start:3, end:6}, 7, 9)).toEqual([{start:3, end:6}, {start:7, end:9}]);
+});
+
 //Replacements
+
+/*
 test("Check replacements #1", () => {
     expect(replacements("XX", "AAXXAAXXXAAAA")).toEqual([{start:2, end:4}, {start:6, end:9}]);
 });
@@ -45,3 +70,4 @@ test("Check replacements #5", () => {
 test("Check replacements #6", () => {
     expect(replacements("XX", "XXXXX")).toEqual([{start: 0, end: 6}]);
 });
+*/
