@@ -22,51 +22,37 @@ test("check matches for regexp #5", () => {
 });
 
 
+//Replacements
+test("Check Replacements #1", () => {
+    expect(replacements("XX", "AAXXAA")).toEqual([false, false, true, true, false, false]);
+});
+
+
+test("Check Replacements #2", () => {
+    expect(replacements("XXX", "XXX")).toEqual([true, true, true]);
+});
+
 //Intervals
 test("Check intervals #1", () => {
-    expect(extendInterval({start:1, end:4}, 2, 4)).toEqual([{start:1, end:4}]);
+    expect(intervals("XX", "AAXXAAXXXAAAA")).toEqual([{start:2, end:4}, {start:6, end:9}]);
 });
 
 test("Check intervals #2", () => {
-    expect(extendInterval({start:1, end:4}, 3, 5)).toEqual([{start:1, end:5}]);
+    expect(intervals("XXX", "XXX")).toEqual([{start:0, end:3}]);
 });
 
 test("Check intervals #3", () => {
-    expect(extendInterval({start:2, end:4}, 1, 4)).toEqual([{start:1, end:4}]);
+    expect(intervals("XXX", "XXXAAAXXX")).toEqual([{start:0, end:3}, {start:6, end:9}]);
 });
 
 test("Check intervals #4", () => {
-    expect(extendInterval({start:3, end:6}, 1, 3)).toEqual([{start:1, end:6}]);
+    expect(intervals("XXX", "XXXAAAXX")).toEqual([{start:0, end:3}]);
 });
 
 test("Check intervals #5", () => {
-    expect(extendInterval({start:3, end:6}, 7, 9)).toEqual([{start:3, end:6}, {start:7, end:9}]);
+    expect(intervals("XX", "XXXAAAXX")).toEqual([{start:0, end:3}, {start: 6, end: 8}]);
 });
 
-//Replacements
-
-/*
-test("Check replacements #1", () => {
-    expect(replacements("XX", "AAXXAAXXXAAAA")).toEqual([{start:2, end:4}, {start:6, end:9}]);
+test("Check intervals #6", () => {
+    expect(intervals("XX", "XXXXX")).toEqual([{start: 0, end: 6}]);
 });
-
-test("Check replacements #2", () => {
-    expect(replacements("XXX", "XXX")).toEqual([{start:0, end:3}]);
-});
-
-test("Check replacements #3", () => {
-    expect(replacements("XXX", "XXXAAAXXX")).toEqual([{start:0, end:3}, {start:6, end:9}]);
-});
-
-test("Check replacements #4", () => {
-    expect(replacements("XXX", "XXXAAAXX")).toEqual([{start:0, end:3}]);
-});
-
-test("Check replacements #5", () => {
-    expect(replacements("XX", "XXXAAAXX")).toEqual([{start:0, end:3}, {start: 6, end: 8}]);
-});
-
-test("Check replacements #6", () => {
-    expect(replacements("XX", "XXXXX")).toEqual([{start: 0, end: 6}]);
-});
-*/

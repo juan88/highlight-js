@@ -15,39 +15,44 @@ matches = function(part, total) {
 replacements = function(part, total) {
     var replacements = [];
     matches = module.exports.matches(part, total);
+    
+    //Initialize interval array
+    for(var i = 0; i < total.length; i++) {
+        replacements.push(false);
+    }
+
     if(matches.length > 0) {
-        var interval = {start:matches[0], end:matches[0]+part.length};
-        
         for(var i = 0; i < matches.length; i++) {
-            var start, end;
-            start = matches[i];
-            if(i+1 < matches.length) {
-                if(matches[i] + part.length > matches[i+1]) {
-                    //Overlapping
-                    end = matches[i+1]+part.length;
-                } else {
-                    end = matches[i]+part.length;
-                }
-            } else {
-                end = matches[i]+part.length;
-            }
-            replacements.push(interval);
+            var end = matches[i] + part.length;
+            for(var j = matches[i]; j < end; j++) {
+                replacements[j] = true;
+            }        
         }
     }
 
     return replacements;
 }
 
-extendInterval = function(interval, newStart, newEnd) {
-    if(interval.start <= newStart && newStart <= interval.end) {
-        return [{start:interval.start, end:Math.max(interval.end, newEnd)}];
+intervals = function(part, total) {
+    var intervals = [];
+    var isInterval = false;
+    var start,end = 0;
+    var replacements = module.exports.replacements(part, total);
+
+    for(var i = 0; i < total.length; i++) {
+        if(!isInterval && replacements[i]) {
+            start = i;
+            isInterval = true;
+        }
+
+        if(isInterval && !replacements[i]) {
+            end = i;
+            isInterval = false;
+            intervals.push({start:start, end:end});
+        }
     }
 
-    if(interval.start <= newEnd && newEnd <= interval.end) {
-        return [{start: Math.min(newStart, interval.start), end: interval.end}];
-    }
-
-    return [interval, {start:newStart, end:newEnd}];
+    return intervals;
 }
 
 
@@ -59,5 +64,4 @@ module.exports = {
     matches:matches,
     replacements:replacements,
     highlight:highlight,
-    extendInterval: extendInterval,
 };
