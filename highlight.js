@@ -52,16 +52,47 @@ intervals = function(part, total) {
         }
     }
 
+    if(isInterval) {
+    	intervals.push({start:start, end:total.length})
+    }
+
     return intervals;
 }
 
 
 highlight = function(part, total, color) {
-    var replacements = replacements(part, total);
+    var intervals = module.exports.intervals(part, total);
+
+    var aux = total;
+    for(var i = intervals.length-1; i >= 0; i--) {
+    	var newContent = module.exports.tag('span', aux.slice(intervals[i].start, intervals[i].end), module.exports.style(color));
+    	aux = module.exports.splice(aux, intervals[i].start, intervals[i].end, newContent);
+    }
+
+    return aux;
+};
+
+tag = function(tag, content, options = "") {
+	if(options.length > 0) {
+		options = " " + options;
+	}
+	return "<"+tag + options +">"+content+"</"+tag+">";
+};
+
+splice = function(str, start, end, add) {
+	return str.slice(0, start).concat(add, str.slice(end));
+};
+
+style = function(color) {
+	return "style=\"background-color: "+color+";\"";
 };
 
 module.exports = {
     matches:matches,
+    intervals:intervals,
     replacements:replacements,
     highlight:highlight,
+    style: style,
+    tag: tag,
+    splice: splice
 };
