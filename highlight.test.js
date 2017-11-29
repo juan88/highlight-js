@@ -108,10 +108,10 @@ test("Check highlight #2", () => {
     expect(highlight("XXX", "XXX", "#FEFEFE")).toEqual("<span style=\"background-color: #FEFEFE;\">XXX</span>");
 });
 
-test("Check intervals #3", () => {
+test("Check highlight #3", () => {
     expect(highlight("XXX", "XXXAAAXX", "#FEFEFE")).toEqual("<span style=\"background-color: #FEFEFE;\">XXX</span>AAAXX");
 });
 
-test("Check intervals #4", () => {
+test("Check highlight #4", () => {
     expect(highlight("XX", "XXXAAAXX", "#FEFEFE")).toEqual("<span style=\"background-color: #FEFEFE;\">XXX</span>AAA<span style=\"background-color: #FEFEFE;\">XX</span>");
 });

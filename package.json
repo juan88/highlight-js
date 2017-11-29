@@ -1,4 +1,22 @@
 {
+  "name": "highlight-js",
+  "version": "0.1.0",
+  "description": "A small library for highlighting via markup changes some parts of a string",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/juan88/highlight-js.git"
+  },
+  "keywords": [
+    "highlight",
+    "regexp",
+    "color"
+  ],
+  "author": "Juan Martín Enríquez <juanenriquez@gmail.com>",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/juan88/highlight-js/issues"
+  },
   "scripts": {
     "test": "jest"
   },
