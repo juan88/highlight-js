@@ -11,6 +11,7 @@
     "regexp",
     "color"
   ],
+  "private": true,
   "homepage": "https://github.com/juan88/highlight-js",
   "ignore": [
     "**/.*",
