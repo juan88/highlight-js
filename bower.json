@@ -1,5 +1,5 @@
 {
-  "name": "highlight-js",
+  "name": "highlights",
   "description": "A small library for highlighting via markup changes some parts of a string",
   "main": "highlight.js",
   "authors": [
@@ -12,7 +12,6 @@
     "color"
   ],
   "homepage": "https://github.com/juan88/highlight-js",
-  "private": true,
   "ignore": [
     "**/.*",
     "node_modules",
