@@ -1,5 +1,8 @@
-const sum = require('./highlight');
+const h = require('./highlight');
 
+
+
+/*
 //Matches
 test("check matches for regexp #1", () => {
     expect(matches("AAXXA", "AAXXAAXXXAAAA")).toEqual([0]);
@@ -96,22 +99,27 @@ test("Check tag #1", () => {
 });
 
 test("Check tag #2", () => {
-    expect(tag("span", "foo")).toEqual("<span>foo</span>");
+    expect(h.tag("span", "foo")).toEqual("<span>foo</span>");
 });
+*/
 
 //Highlight
 test("Check highlight #1", () => {
-    expect(highlight("XX", "AAXXAAXXXAAAA", "#F0F011")).toEqual("AA<span style=\"background-color: #F0F011;\">XX</span>AA<span style=\"background-color: #F0F011;\">XXX</span>AAAA");
+    expect(h.highlight("XX", "AAXXAAXXXAAAA", "#F0F011")).toEqual("AA<span style=\"background-color: #F0F011;\">XX</span>AA<span style=\"background-color: #F0F011;\">XXX</span>AAAA");
 });
 
 test("Check highlight #2", () => {
-    expect(highlight("XXX", "XXX", "#FEFEFE")).toEqual("<span style=\"background-color: #FEFEFE;\">XXX</span>");
+    expect(h.highlight("XXX", "XXX", "#FEFEFE")).toEqual("<span style=\"background-color: #FEFEFE;\">XXX</span>");
 });
 
 test("Check highlight #3", () => {
-    expect(highlight("XXX", "XXXAAAXX", "#FEFEFE")).toEqual("<span style=\"background-color: #FEFEFE;\">XXX</span>AAAXX");
+    expect(h.highlight("XXX", "XXXAAAXX", "#FEFEFE")).toEqual("<span style=\"background-color: #FEFEFE;\">XXX</span>AAAXX");
 });
 
 test("Check highlight #4", () => {
-    expect(highlight("XX", "XXXAAAXX", "#FEFEFE")).toEqual("<span style=\"background-color: #FEFEFE;\">XXX</span>AAA<span style=\"background-color: #FEFEFE;\">XX</span>");
+    expect(h.highlight("XX", "XXXAAAXX", "#FEFEFE")).toEqual("<span style=\"background-color: #FEFEFE;\">XXX</span>AAA<span style=\"background-color: #FEFEFE;\">XX</span>");
+});
+
+test("Check highlight #5", () => {
+    expect(h.highlight("XX", "XXXAAA", "#FEFEFE")).toEqual("<span style=\"background-color: #FEFEFE;\">XXX</span>AAA");
 });

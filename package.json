@@ -22,5 +22,8 @@
   },
   "devDependencies": {
     "jest": "^21.2.1"
+  },
+  "dependencies": {
+    "bower": "^1.8.2"
   }
 }

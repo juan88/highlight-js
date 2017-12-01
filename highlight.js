@@ -1,98 +1,112 @@
-matches = function(part, total) {
-    var regexp = new RegExp("(?=("+part+"))", "gi");
-    var m, mm = [];
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define([], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        // Node. Does not work with strict CommonJS, but
+        // only CommonJS-like environments that support module.exports,
+        // like Node.
+        module.exports = factory();
+    } else {
+        // Browser globals (root is window)
+        root.highlight = factory();
+  }
+}(typeof self !== 'undefined' ? self : this, function () {
 
-    while ((m = regexp.exec(total)) !== null) {
-        if (m.index === regexp.lastIndex) {
-            regexp.lastIndex++;
-        }
-        mm.push(m.index);
-    }
-
-    return mm;
-}
-
-replacements = function(part, total) {
-    var replacements = [];
-    matches = module.exports.matches(part, total);
+    // Just return a value to define the module export.
+    // This example returns an object, but the module
+    // can return a function as the exported value.
     
-    //Initialize interval array
-    for(var i = 0; i < total.length; i++) {
-        replacements.push(false);
-    }
+    function matches(part, total) {
+        var regexp = new RegExp("(?=("+part+"))", "gi");
+        var m, mm = [];
 
-    if(matches.length > 0) {
-        for(var i = 0; i < matches.length; i++) {
-            var end = matches[i] + part.length;
-            for(var j = matches[i]; j < end; j++) {
-                replacements[j] = true;
-            }        
-        }
-    }
-
-    return replacements;
-}
-
-intervals = function(part, total) {
-    var intervals = [];
-    var isInterval = false;
-    var start,end = 0;
-    var replacements = module.exports.replacements(part, total);
-
-    for(var i = 0; i < total.length; i++) {
-        if(!isInterval && replacements[i]) {
-            start = i;
-            isInterval = true;
+        while ((m = regexp.exec(total)) !== null) {
+            if (m.index === regexp.lastIndex) {
+                regexp.lastIndex++;
+            }
+            mm.push(m.index);
         }
 
-        if(isInterval && !replacements[i]) {
-            end = i;
-            isInterval = false;
-            intervals.push({start:start, end:end});
+        return mm;
+    };
+
+    function replacements(part, total) {
+        var reps = [];
+        mms = matches(part, total);
+        
+        //Initialize interval array
+        for(var i = 0; i < total.length; i++) {
+            reps.push(false);
         }
-    }
 
-    if(isInterval) {
-    	intervals.push({start:start, end:total.length})
-    }
+        if(mms.length > 0) {
+            for(var i = 0; i < mms.length; i++) {
+                var end = mms[i] + part.length;
+                for(var j = mms[i]; j < end; j++) {
+                    reps[j] = true;
+                }        
+            }
+        }
 
-    return intervals;
-}
+        return reps;
+    };
+
+    function intervals(part, total) {
+        var intervals = [];
+        var isInterval = false;
+        var start,end = 0;
+        var reps = replacements(part, total);
+
+        for(var i = 0; i < total.length; i++) {
+            if(!isInterval && reps[i]) {
+                start = i;
+                isInterval = true;
+            }
+
+            if(isInterval && !reps[i]) {
+                end = i;
+                isInterval = false;
+                intervals.push({start:start, end:end});
+            }
+        }
+
+        if(isInterval) {
+            intervals.push({start:start, end:total.length})
+        }
+
+        return intervals;
+    };
 
 
-highlight = function(part, total, color) {
-    var intervals = module.exports.intervals(part, total);
+    function highlight(part, total, color) {
+        var elems = intervals(part, total);
 
-    var aux = total;
-    for(var i = intervals.length-1; i >= 0; i--) {
-    	var newContent = module.exports.tag('span', aux.slice(intervals[i].start, intervals[i].end), module.exports.style(color));
-    	aux = module.exports.splice(aux, intervals[i].start, intervals[i].end, newContent);
-    }
+        var aux = total;
+        for(var i = elems.length-1; i >= 0; i--) {
+            var newContent = tag('span', aux.slice(elems[i].start, elems[i].end), style(color));
+            aux = splice(aux, elems[i].start, elems[i].end, newContent);
+        }
 
-    return aux;
-};
+        return aux;
+    };
 
-tag = function(tag, content, options = "") {
-	if(options.length > 0) {
-		options = " " + options;
-	}
-	return "<"+tag + options +">"+content+"</"+tag+">";
-};
+    function tag(tag, content, options = "") {
+        if(options.length > 0) {
+            options = " " + options;
+        }
+        return "<"+tag + options +">"+content+"</"+tag+">";
+    };
 
-splice = function(str, start, end, add) {
-	return str.slice(0, start).concat(add, str.slice(end));
-};
+    function splice(str, start, end, add) {
+        return str.slice(0, start).concat(add, str.slice(end));
+    };
 
-style = function(color) {
-	return "style=\"background-color: "+color+";\"";
-};
+    function style(color) {
+        return "style=\"background-color: "+color+";\"";
+    };
 
-module.exports = {
-    matches:matches,
-    intervals:intervals,
-    replacements:replacements,
-    highlight:highlight,
-    style: style,
-    tag: tag,
-    splice: splice
-};
+    return {
+        highlight:highlight
+    };
+}));
