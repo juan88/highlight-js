@@ -1,7 +1,5 @@
 const h = require('./highlight');
 
-
-
 /*
 //Matches
 test("check matches for regexp #1", () => {
@@ -121,5 +119,5 @@ test("Check highlight #4", () => {
 });
 
 test("Check highlight #5", () => {
-    expect(h.highlight("XX", "XXXAAA", "#FEFEFE")).toEqual("<span style=\"background-color: #FEFEFE;\">XXX</span>AAA");
+    expect(h.highlight("XX", "XXXAAAXX", "#FEFEFE")).toEqual("<span style=\"background-color: #FEFEFE;\">XXX</span>AAA<span style=\"background-color: #FEFEFE;\">XX</span>");
 });

@@ -33,13 +33,13 @@
 
     function replacements(part, total) {
         var reps = [];
-        mms = matches(part, total);
         
         //Initialize interval array
         for(var i = 0; i < total.length; i++) {
             reps.push(false);
         }
 
+        mms = matches(part, total);
         if(mms.length > 0) {
             for(var i = 0; i < mms.length; i++) {
                 var end = mms[i] + part.length;
